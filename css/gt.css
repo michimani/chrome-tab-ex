@@ -1,0 +1,10 @@
+#actionList {
+  width: 150px;
+}
+.actionListItem {
+  padding: 5px;
+}
+.actionListItem:hover {
+  cursor: pointer;
+  background-color:#aeb0af;
+}
