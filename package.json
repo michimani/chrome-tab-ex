@@ -1,0 +1,24 @@
+{
+  "name": "group-tabs",
+  "version": "1.0.0",
+  "description": "chrome-tab-ex ===",
+  "main": "index.js",
+  "scripts": {
+    "min:js": "./node_modules/webpack-cli/bin/cli.js --mode=production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/michimani/chrome-tab-ex.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/michimani/chrome-tab-ex/issues"
+  },
+  "homepage": "https://github.com/michimani/chrome-tab-ex#readme",
+  "devDependencies": {
+    "webpack": "^5.38.1",
+    "webpack-cli": "^4.7.2"
+  }
+}
