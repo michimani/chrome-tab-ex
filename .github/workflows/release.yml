@@ -56,9 +56,9 @@ jobs:
       run: |
         mkdir group-tabs
         ls -la
-        cp -r css group-tabs/
-        cp -r images group-tabs/
-        cp -r js group-tabs/
+        cp -r css group-tabs/css
+        cp -r images group-tabs/images
+        cp -r js group-tabs/js
         cp LICENSE group-tabs/
         cp manifest.json group-tabs/
         cp menu.html group-tabs/
