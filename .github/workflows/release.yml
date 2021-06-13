@@ -63,7 +63,7 @@ jobs:
         cp manifest.json group-tabs/
         cp menu.html group-tabs/
         tree
-        zip -j -r release group-tabs
+        zip -r release group-tabs
     - name: Upload release asset
       uses: actions/upload-release-asset@v1.0.2
       env:
