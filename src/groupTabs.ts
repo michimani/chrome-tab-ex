@@ -5,6 +5,9 @@ import * as ctg from "./chromeTabGroups";
 function groupTabs() {
   const sortTabs = <HTMLElement>document.getElementById("sortTabs");
   const groupTabs = <HTMLElement>document.getElementById("groupTabs");
+  const groupTabsIgnoreSubDomain = <HTMLElement>(
+    document.getElementById("groupTabsIgnoreSubDomain")
+  );
   const ungroupTabs = <HTMLElement>document.getElementById("ungroupTabs");
   const targetTabConditions: chrome.tabs.QueryInfo = {
     currentWindow: true,
@@ -26,6 +29,41 @@ function groupTabs() {
     const domains: string[] = Array();
     for (let i = 0; i < tabs.length; i++) {
       const domain = url.getDomainName(<string>tabs[i].url);
+      if (domain === "") {
+        continue;
+      }
+
+      if (domainMap[domain] === undefined) {
+        domainMap[domain] = Array();
+        domains.push(domain);
+      }
+
+      domainMap[domain].push(<number>tabs[i].id);
+    }
+    domains.sort();
+
+    for (let i = 0; i < domains.length; i++) {
+      const d: string = domains[i];
+      const groupID: number = await ct.groupTabs(domainMap[d]);
+      const collapsed: boolean = !domainMap[d].includes(<number>activeTab.id);
+      const colorIdx = i % ctg.groupColors.length;
+      ctg.updateTabGroup(groupID, {
+        collapsed: collapsed,
+        title: d,
+        color: ctg.groupColors[colorIdx],
+      });
+    }
+  });
+
+  groupTabsIgnoreSubDomain.addEventListener("click", async () => {
+    sortTabsByDomainNameIgnoreSubDomain();
+    const tabs = await ct.queryTabs(targetTabConditions);
+    const [activeTab] = await ct.getActiveTab();
+
+    const domainMap: { [key: string]: number[] } = {};
+    const domains: string[] = Array();
+    for (let i = 0; i < tabs.length; i++) {
+      const domain = url.getDomainNameIgnoreSubDomain(<string>tabs[i].url);
       if (domain === "") {
         continue;
       }
@@ -78,6 +116,12 @@ function groupTabs() {
   const sortTabsByDomainName = async () => {
     const tabs = await ct.queryTabs(targetTabConditions);
     const sorted = ct.sortTabsByDomainName(tabs);
+    ct.moveTabs(sorted);
+  };
+
+  const sortTabsByDomainNameIgnoreSubDomain = async () => {
+    const tabs = await ct.queryTabs(targetTabConditions);
+    const sorted = ct.sortTabsByDomainNameIgnoreSubDomain(tabs);
     ct.moveTabs(sorted);
   };
 }

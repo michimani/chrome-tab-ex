@@ -39,13 +39,11 @@ export function getDomainName(url: string): string {
  * @returns
  */
 export function getDomainNameIgnoreSubDomain(url: string): string {
-  let domainName = "";
   const fullDomainName = getDomainName(url);
 
   const lastDotIdx = fullDomainName.lastIndexOf(".");
-  if (lastDotIdx > 0) {
-    domainName = domainName.substr(lastDotIdx);
+  if (lastDotIdx < 0) {
+    return fullDomainName;
   }
-
-  return domainName;
+  return fullDomainName.substr(lastDotIdx + 1);
 }
