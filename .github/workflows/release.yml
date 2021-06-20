@@ -38,7 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: 16.x
+        node-version: [16.x]
     steps:
     - name: Download artifact to get url to upload to release
       uses: actions/download-artifact@v2
