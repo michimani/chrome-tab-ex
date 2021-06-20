@@ -5,30 +5,30 @@
  * @returns
  */
 export function getDomainName(url: string): string {
-  let domainName = ''
-  if (url === '') {
-    return domainName
+  let domainName = "";
+  if (url === "") {
+    return domainName;
   }
 
-  const m = url.match(/https?:\/\/(.*)$/)
-  if (m === null || m[1] === undefined || m[1] === '') {
-    return domainName
+  const m = url.match(/https?:\/\/(.*)$/);
+  if (m === null || m[1] === undefined || m[1] === "") {
+    return domainName;
   }
-  domainName = m[1]
+  domainName = m[1];
 
-  const idx = domainName.indexOf('/')
+  const idx = domainName.indexOf("/");
   if (idx > 0) {
-    domainName = domainName.substr(0, idx)
+    domainName = domainName.substr(0, idx);
   }
 
-  const lastDotIdx = domainName.lastIndexOf('.')
+  const lastDotIdx = domainName.lastIndexOf(".");
   if (lastDotIdx > 0) {
-    domainName = domainName.substr(0, lastDotIdx)
+    domainName = domainName.substr(0, lastDotIdx);
   }
 
-  domainName = domainName.replace(/^www\d?\./i, '')
+  domainName = domainName.replace(/^www\d?\./i, "");
 
-  return domainName
+  return domainName;
 }
 
 /**
@@ -39,13 +39,13 @@ export function getDomainName(url: string): string {
  * @returns
  */
 export function getDomainNameIgnoreSubDomain(url: string): string {
-  let domainName = ''
-  const fullDomainName = getDomainName(url)
+  let domainName = "";
+  const fullDomainName = getDomainName(url);
 
-  const lastDotIdx = fullDomainName.lastIndexOf('.')
+  const lastDotIdx = fullDomainName.lastIndexOf(".");
   if (lastDotIdx > 0) {
-    domainName = domainName.substr(lastDotIdx)
+    domainName = domainName.substr(lastDotIdx);
   }
 
-  return domainName
+  return domainName;
 }

@@ -5,6 +5,21 @@ on:
       - "v[0-9]+.[0-9]+.[0-9]+"
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x, 15.x]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm ci
+    - run: npm run build --if-present
+    - run: npm test
+
   setup-release:
     name: Setup release
     runs-on: ubuntu-latest
@@ -36,6 +51,9 @@ jobs:
     name: Release Source Code
     needs: setup-release
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x, 15.x]
     steps:
     - name: Download artifact to get url to upload to release
       uses: actions/download-artifact@v2
@@ -49,21 +67,19 @@ jobs:
         ls -al
         url=$(cat url.txt)
         echo "##[set-output name=upload_url;]$url"
-    - name: Check out code into the Go module directory
+    - name: Check out code
       uses: actions/checkout@v2
+      name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm ci
+    - run: npm run build --if-present
 
     - name: Pack source code in zip file
       run: |
-        mkdir group-tabs
-        ls -la
-        cp -r css group-tabs/css
-        cp -r images group-tabs/images
-        cp -r js group-tabs/js
-        cp LICENSE group-tabs/
-        cp manifest.json group-tabs/
-        cp menu.html group-tabs/
-        tree
-        zip -r release group-tabs
+        tree dist
+        zip -r release dist
     - name: Upload release asset
       uses: actions/upload-release-asset@v1.0.2
       env:
