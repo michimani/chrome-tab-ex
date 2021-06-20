@@ -8,12 +8,8 @@
     "build": "webpack --config webpack/webpack.js",
     "clean": "rimraf dist",
     "test": "echo 'no test'",
-    "style": "prettier --write \"src/*.ts\""
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "style"
-    }
+    "style": "prettier --write \"src/*.ts\"",
+    "prepare": "husky install"
   },
   "author": "michimani",
   "license": "MIT",
