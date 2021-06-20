@@ -2,6 +2,12 @@
 CHANGELOG
 =========
 
+1.2.0
+=======
+
+* Feature: Group tabs by domain name ignore sub-domain.
+* Refactor: Rewritten in TypeScript
+
 1.1.0
 =======
 
