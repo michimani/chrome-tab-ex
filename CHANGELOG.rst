@@ -2,6 +2,11 @@
 CHANGELOG
 =========
 
+1.2.1
+=======
+
+* Fix: Order of grouped tabs.
+
 1.2.0
 =======
 
