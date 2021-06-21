@@ -24,6 +24,7 @@ function groupTabs() {
     sortTabsByDomainName();
     const tabs = await ct.queryTabs(targetTabConditions);
     const [activeTab] = await ct.getActiveTab();
+    const pinnedTabs = await ct.getPinnedTabs();
 
     const domainMap: { [key: string]: number[] } = {};
     const domains: string[] = Array();
@@ -40,18 +41,21 @@ function groupTabs() {
 
       domainMap[domain].push(<number>tabs[i].id);
     }
-    domains.sort();
+    domains.sort((a, b) => {
+      return a < b ? 1 : -1;
+    });
 
     for (let i = 0; i < domains.length; i++) {
       const d: string = domains[i];
       const groupID: number = await ct.groupTabs(domainMap[d]);
       const collapsed: boolean = !domainMap[d].includes(<number>activeTab.id);
-      const colorIdx = i % ctg.groupColors.length;
+      const colorIdx = (domains.length - i - 1) % ctg.groupColors.length;
       ctg.updateTabGroup(groupID, {
         collapsed: collapsed,
         title: d,
         color: ctg.groupColors[colorIdx],
       });
+      ctg.moveGroup(groupID, pinnedTabs.length);
     }
   });
 
@@ -59,6 +63,7 @@ function groupTabs() {
     sortTabsByDomainNameIgnoreSubDomain();
     const tabs = await ct.queryTabs(targetTabConditions);
     const [activeTab] = await ct.getActiveTab();
+    const pinnedTabs = await ct.getPinnedTabs();
 
     const domainMap: { [key: string]: number[] } = {};
     const domains: string[] = Array();
@@ -75,18 +80,21 @@ function groupTabs() {
 
       domainMap[domain].push(<number>tabs[i].id);
     }
-    domains.sort();
+    domains.sort((a, b) => {
+      return a < b ? 1 : -1;
+    });
 
     for (let i = 0; i < domains.length; i++) {
       const d: string = domains[i];
       const groupID: number = await ct.groupTabs(domainMap[d]);
       const collapsed: boolean = !domainMap[d].includes(<number>activeTab.id);
-      const colorIdx = i % ctg.groupColors.length;
+      const colorIdx = (domains.length - i - 1) % ctg.groupColors.length;
       ctg.updateTabGroup(groupID, {
         collapsed: collapsed,
         title: d,
         color: ctg.groupColors[colorIdx],
       });
+      ctg.moveGroup(groupID, pinnedTabs.length);
     }
   });
 
