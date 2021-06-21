@@ -50,7 +50,6 @@ function groupTabs() {
       const groupID: number = await ct.groupTabs(domainMap[d]);
       const collapsed: boolean = !domainMap[d].includes(<number>activeTab.id);
       const colorIdx = (domains.length - i - 1) % ctg.groupColors.length;
-      console.log(`domain: ${d}, color: ${colorIdx}`);
       ctg.updateTabGroup(groupID, {
         collapsed: collapsed,
         title: d,
@@ -90,7 +89,6 @@ function groupTabs() {
       const groupID: number = await ct.groupTabs(domainMap[d]);
       const collapsed: boolean = !domainMap[d].includes(<number>activeTab.id);
       const colorIdx = (domains.length - i - 1) % ctg.groupColors.length;
-      console.log(`domain: ${d}, color: ${colorIdx}`);
       ctg.updateTabGroup(groupID, {
         collapsed: collapsed,
         title: d,
