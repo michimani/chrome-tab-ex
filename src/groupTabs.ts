@@ -41,8 +41,8 @@ function groupTabs() {
 
       domainMap[domain].push(<number>tabs[i].id);
     }
-    domains.sort((a,b) => {
-      return (a < b ? 1 : -1)
+    domains.sort((a, b) => {
+      return a < b ? 1 : -1;
     });
 
     for (let i = 0; i < domains.length; i++) {
@@ -50,13 +50,13 @@ function groupTabs() {
       const groupID: number = await ct.groupTabs(domainMap[d]);
       const collapsed: boolean = !domainMap[d].includes(<number>activeTab.id);
       const colorIdx = (domains.length - i - 1) % ctg.groupColors.length;
-      console.log(`domain: ${d}, color: ${colorIdx}`)
+      console.log(`domain: ${d}, color: ${colorIdx}`);
       ctg.updateTabGroup(groupID, {
         collapsed: collapsed,
         title: d,
         color: ctg.groupColors[colorIdx],
       });
-      ctg.moveGroup(groupID, pinnedTabs.length)
+      ctg.moveGroup(groupID, pinnedTabs.length);
     }
   });
 
@@ -81,8 +81,8 @@ function groupTabs() {
 
       domainMap[domain].push(<number>tabs[i].id);
     }
-    domains.sort((a,b) => {
-      return (a < b ? 1 : -1)
+    domains.sort((a, b) => {
+      return a < b ? 1 : -1;
     });
 
     for (let i = 0; i < domains.length; i++) {
@@ -90,13 +90,13 @@ function groupTabs() {
       const groupID: number = await ct.groupTabs(domainMap[d]);
       const collapsed: boolean = !domainMap[d].includes(<number>activeTab.id);
       const colorIdx = (domains.length - i - 1) % ctg.groupColors.length;
-      console.log(`domain: ${d}, color: ${colorIdx}`)
+      console.log(`domain: ${d}, color: ${colorIdx}`);
       ctg.updateTabGroup(groupID, {
         collapsed: collapsed,
         title: d,
         color: ctg.groupColors[colorIdx],
       });
-      ctg.moveGroup(groupID, pinnedTabs.length)
+      ctg.moveGroup(groupID, pinnedTabs.length);
     }
   });
 
