@@ -10,6 +10,10 @@ export function getActiveTab(): Promise<chrome.tabs.Tab[]> {
   return chrome.tabs.query({ currentWindow: true, active: true });
 }
 
+export function getPinnedTabs(): Promise<chrome.tabs.Tab[]> {
+  return chrome.tabs.query({ currentWindow: true, pinned: true });
+}
+
 /**
  * sortTabsByURL sorts tabs by URL
  * @param tabs
