@@ -1,7 +1,7 @@
 {
   "name": "Group Tabs",
   "description": "Group tabs by domain.",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "manifest_version": 3,
   "background": {},
   "permissions": ["tabs", "tabGroups"],
