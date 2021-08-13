@@ -76,7 +76,7 @@ export function removeAttributeTypeDomain(domain: string): RemoveResult {
   for (let i = 0; i < attributeDomainList.length; i++) {
     const localiedAttributeTypeDomain = `${attributeDomainList[i]}${tld}`;
     if (domain.lastIndexOf(localiedAttributeTypeDomain) > 0) {
-      domain.replace(localiedAttributeTypeDomain, "");
+      domain = domain.replace(localiedAttributeTypeDomain, "");
       return { removed: true, result: domain };
     }
   }
