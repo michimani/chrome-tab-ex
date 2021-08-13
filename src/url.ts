@@ -1,3 +1,5 @@
+import * as tld from "./tld";
+
 /**
  * getDomain returns domain name part of the url.
  * - ignore `www`
@@ -16,17 +18,22 @@ export function getDomainName(url: string): string {
   }
   domainName = m[1];
 
+  domainName = domainName.replace(/^www\d?\./i, "");
+
   const idx = domainName.indexOf("/");
   if (idx > 0) {
     domainName = domainName.substr(0, idx);
+  }
+
+  const removeRes = tld.removeAttributeTypeDomain(domainName);
+  if (removeRes.removed) {
+    return removeRes.result;
   }
 
   const lastDotIdx = domainName.lastIndexOf(".");
   if (lastDotIdx > 0) {
     domainName = domainName.substr(0, lastDotIdx);
   }
-
-  domainName = domainName.replace(/^www\d?\./i, "");
 
   return domainName;
 }
