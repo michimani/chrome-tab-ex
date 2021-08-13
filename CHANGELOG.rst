@@ -2,6 +2,11 @@
 CHANGELOG
 =========
 
+1.2.2
+======
+
+* Fix: Remove attribute type domain (e.g. ``.co.jp``).
+
 1.2.1
 =======
 
