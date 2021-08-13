@@ -7,7 +7,7 @@
     "watch": "webpack --config webpack/webpack.js --watch",
     "build": "webpack --config webpack/webpack.js",
     "clean": "rimraf dist",
-    "test": "echo 'no test'",
+    "test": "npx jest",
     "style": "prettier --write \"src/*.ts\"",
     "prepare": "husky install"
   },

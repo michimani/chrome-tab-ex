@@ -1,0 +1,22 @@
+name: onlytest
+on: pull_request
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js 16.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 16.x
+
+    - name: Get dependencies
+      run: npm ci
+
+    - name: Test code
+      run: npm run test
+
