@@ -45,21 +45,41 @@ function TestGetDomainName() {
     },
     {
       name: "attribute type domain",
-      url: "https://example.co.jp/hoge",
+      url: "https://example.lg.jp/hoge",
       expect: "example",
     },
     {
       name: "attribute type domain with www",
-      url: "https://www.example.co.jp/hoge",
+      url: "https://www.example.lg.jp/hoge",
       expect: "example",
     },
     {
       name: "attribute type domain with sub domain",
-      url: "https://test.example.co.jp/hoge",
+      url: "https://test.example.lg.jp/hoge",
       expect: "test.example",
     },
     {
       name: "attribute type domain with www and sub domain",
+      url: "https://www.test.example.lg.jp/hoge",
+      expect: "test.example",
+    },
+    {
+      name: "second level domain",
+      url: "https://example.co.jp/hoge",
+      expect: "example",
+    },
+    {
+      name: "second level domain with www",
+      url: "https://www.example.co.jp/hoge",
+      expect: "example",
+    },
+    {
+      name: "second level domain with sub domain",
+      url: "https://test.example.co.jp/hoge",
+      expect: "test.example",
+    },
+    {
+      name: "second level domain with www and sub domain",
       url: "https://www.test.example.co.jp/hoge",
       expect: "test.example",
     },
@@ -114,21 +134,41 @@ function TestGetDomainNameIgnoreSubDomain() {
     },
     {
       name: "attribute type domain",
-      url: "https://example.co.jp/hoge",
+      url: "https://example.lg.jp/hoge",
       expect: "example",
     },
     {
       name: "attribute type domain with www",
-      url: "https://www.example.co.jp/hoge",
+      url: "https://www.example.lg.jp/hoge",
       expect: "example",
     },
     {
       name: "attribute type domain with sub domain",
-      url: "https://test.example.co.jp/hoge",
+      url: "https://test.example.lg.jp/hoge",
       expect: "example",
     },
     {
       name: "attribute type domain with www and sub domain",
+      url: "https://www.test.example.lg.jp/hoge",
+      expect: "example",
+    },
+    {
+      name: "second level domain",
+      url: "https://example.co.jp/hoge",
+      expect: "example",
+    },
+    {
+      name: "second level domain with www",
+      url: "https://www.example.co.jp/hoge",
+      expect: "example",
+    },
+    {
+      name: "second level domain with sub domain",
+      url: "https://test.example.co.jp/hoge",
+      expect: "example",
+    },
+    {
+      name: "second level domain with www and sub domain",
       url: "https://www.test.example.co.jp/hoge",
       expect: "example",
     },

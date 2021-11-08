@@ -25,7 +25,12 @@ export function getDomainName(url: string): string {
     domainName = domainName.substr(0, idx);
   }
 
-  const removeRes = tld.removeAttributeTypeDomain(domainName);
+  let removeRes = tld.removeSecondLevelDomain(domainName);
+  if (removeRes.removed) {
+    return removeRes.result;
+  }
+
+  removeRes = tld.removeAttributeTypeDomain(domainName);
   if (removeRes.removed) {
     return removeRes.result;
   }

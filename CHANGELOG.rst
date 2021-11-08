@@ -2,10 +2,15 @@
 CHANGELOG
 =========
 
+1.2.3
+======
+
+* Fix: ccTLD considerations (e.g. ``.co.jp``, ``.com.hk``).
+
 1.2.2
 ======
 
-* Fix: Remove attribute type domain (e.g. ``.co.jp``).
+* Fix: Remove attribute type domain (e.g. ``.lg.jp``).
 
 1.2.1
 =======
