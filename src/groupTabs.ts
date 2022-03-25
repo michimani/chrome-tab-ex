@@ -9,6 +9,7 @@ function groupTabs() {
     document.getElementById("groupTabsIgnoreSubDomain")
   );
   const ungroupTabs = <HTMLElement>document.getElementById("ungroupTabs");
+  const removeDupTabs = <HTMLElement>document.getElementById("removeDupTabs");
   const targetTabConditions: chrome.tabs.QueryInfo = {
     currentWindow: true,
     pinned: false,
@@ -115,6 +116,10 @@ function groupTabs() {
     ct.ungroupTabs(tabIDs);
   });
 
+  removeDupTabs.addEventListener("click", async () => {
+    removeDuplicatedTabs();
+  });
+
   const sortTabsByURL = async () => {
     const tabs = await ct.queryTabs(targetTabConditions);
     const sorted = ct.sortTabsByURL(tabs);
@@ -131,6 +136,28 @@ function groupTabs() {
     const tabs = await ct.queryTabs(targetTabConditions);
     const sorted = ct.sortTabsByDomainNameIgnoreSubDomain(tabs);
     ct.moveTabs(sorted);
+  };
+
+  const removeDuplicatedTabs = async () => {
+    const tabs = await ct.queryTabs(targetTabConditions);
+    const exists: { [key: string]: boolean } = {};
+    for (let i = 0; i < tabs.length; i++) {
+      if (tabs[i] === undefined) {
+        continue;
+      }
+      const t = tabs[i];
+      if (t.url === undefined) {
+        continue;
+      }
+      if (exists[t.url] !== undefined) {
+        if (t.id === undefined) {
+          continue;
+        }
+        ct.removeTab(t.id);
+        continue;
+      }
+      exists[t.url] = true;
+    }
   };
 }
 

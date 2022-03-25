@@ -108,3 +108,7 @@ export function groupTabs(tabIDs: number[]): Promise<number> {
 export function ungroupTabs(tabsIDs: number[]): void {
   chrome.tabs.ungroup(tabsIDs);
 }
+
+export function removeTab(tabID: number): void {
+  chrome.tabs.remove(tabID);
+}
