@@ -2,6 +2,11 @@
 CHANGELOG
 =========
 
+1.3.0
+======
+
+* Feature: Remove duplicated tabs.
+
 1.2.3
 ======
 
