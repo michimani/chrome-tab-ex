@@ -139,7 +139,11 @@ function groupTabs() {
   };
 
   const removeDuplicatedTabs = async () => {
-    const tabs = await ct.queryTabs(targetTabConditions);
+    const tabs = await ct.queryTabs({
+      currentWindow: true,
+      pinned: false,
+      url: ["http://*/*", "https://*/*"],
+    });
     const exists: { [key: string]: boolean } = {};
     for (let i = 0; i < tabs.length; i++) {
       if (tabs[i] === undefined) {
