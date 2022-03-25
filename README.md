@@ -9,6 +9,7 @@ This is a Chrome extension that sorts and groups tabs.
 - Group tabs by domain
 - Group tabs by domain ignore sub-domain
 - Ungroup all tab-groups
+- Remove duplicated tabs
 
 # Usage
 
