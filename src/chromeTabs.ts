@@ -43,14 +43,14 @@ export function sortTabsByDomainName(
   tabs: chrome.tabs.Tab[]
 ): chrome.tabs.Tab[] {
   tabs.sort((a, b) => {
-    const grpupTitleA =
+    const groupTitleA =
       a.url === undefined ? "" : getDomainName(a.url.toLowerCase());
-    const grpupTitleB =
+    const groupTitleB =
       b.url === undefined ? "" : getDomainName(b.url.toLowerCase());
-    if (grpupTitleA < grpupTitleB) {
+    if (groupTitleA < groupTitleB) {
       return -1;
     }
-    if (grpupTitleA > grpupTitleB) {
+    if (groupTitleA > groupTitleB) {
       return 1;
     }
     return 0;
@@ -67,18 +67,18 @@ export function sortTabsByDomainNameIgnoreSubDomain(
   tabs: chrome.tabs.Tab[]
 ): chrome.tabs.Tab[] {
   tabs.sort((a, b) => {
-    const grpupTitleA =
+    const groupTitleA =
       a.url === undefined
         ? ""
         : getDomainNameIgnoreSubDomain(a.url.toLowerCase());
-    const grpupTitleB =
+    const groupTitleB =
       b.url === undefined
         ? ""
         : getDomainNameIgnoreSubDomain(b.url.toLowerCase());
-    if (grpupTitleA < grpupTitleB) {
+    if (groupTitleA < groupTitleB) {
       return -1;
     }
-    if (grpupTitleA > grpupTitleB) {
+    if (groupTitleA > groupTitleB) {
       return 1;
     }
     return 0;
