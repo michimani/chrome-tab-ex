@@ -2,6 +2,11 @@
 CHANGELOG
 =========
 
+1.3.1
+======
+
+* Fix: Update dependencies.
+
 1.3.0
 ======
 
