@@ -137,6 +137,12 @@ function groupTabs() {
 
     for (let i = 0; i < domains.length; i++) {
       const d: string = domains[i];
+
+      // not group for domain has one tab
+      if (domainMap[d].length == 1) {
+        continue;
+      }
+
       const groupID: number = await ct.groupTabs(domainMap[d]);
       const collapsed: boolean = !domainMap[d].includes(<number>activeTab.id);
       const colorIdx = (domains.length - i - 1) % ctg.groupColors.length;
