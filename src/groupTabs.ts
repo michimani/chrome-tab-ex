@@ -135,6 +135,7 @@ function groupTabs() {
       return a < b ? 1 : -1;
     });
 
+    let groupedCnt = 0;
     for (let i = 0; i < domains.length; i++) {
       const d: string = domains[i];
 
@@ -145,13 +146,14 @@ function groupTabs() {
 
       const groupID: number = await ct.groupTabs(domainMap[d]);
       const collapsed: boolean = !domainMap[d].includes(<number>activeTab.id);
-      const colorIdx = (domains.length - i - 1) % ctg.groupColors.length;
+      const colorIdx = groupedCnt % ctg.groupColors.length;
       ctg.updateTabGroup(groupID, {
         collapsed: collapsed,
         title: d,
         color: ctg.groupColors[colorIdx],
       });
       ctg.moveGroup(groupID, pinnedTabs.length);
+      groupedCnt++;
     }
   };
 
