@@ -17,10 +17,16 @@ function groupTabs() {
     groupId: chrome.tabGroups.TAB_GROUP_ID_NONE,
   };
 
+  /**
+   * action for "Sort Tabs (not to group)"
+   */
   sortTabs.addEventListener("click", async () => {
     sortTabsByURL();
   });
 
+  /**
+   * action for "Group Tabs by Domain"
+   */
   groupTabs.addEventListener("click", async () => {
     sortTabsByDomainName();
     const tabs = await ct.queryTabs(targetTabConditions);
@@ -42,24 +48,13 @@ function groupTabs() {
 
       domainMap[domain].push(<number>tabs[i].id);
     }
-    domains.sort((a, b) => {
-      return a < b ? 1 : -1;
-    });
 
-    for (let i = 0; i < domains.length; i++) {
-      const d: string = domains[i];
-      const groupID: number = await ct.groupTabs(domainMap[d]);
-      const collapsed: boolean = !domainMap[d].includes(<number>activeTab.id);
-      const colorIdx = (domains.length - i - 1) % ctg.groupColors.length;
-      ctg.updateTabGroup(groupID, {
-        collapsed: collapsed,
-        title: d,
-        color: ctg.groupColors[colorIdx],
-      });
-      ctg.moveGroup(groupID, pinnedTabs.length);
-    }
+    runGroupTabs(domains, domainMap, pinnedTabs, activeTab);
   });
 
+  /**
+   * action for "Group Tabs by Domain (ignore sub-domain)"
+   */
   groupTabsIgnoreSubDomain.addEventListener("click", async () => {
     sortTabsByDomainNameIgnoreSubDomain();
     const tabs = await ct.queryTabs(targetTabConditions);
@@ -81,24 +76,13 @@ function groupTabs() {
 
       domainMap[domain].push(<number>tabs[i].id);
     }
-    domains.sort((a, b) => {
-      return a < b ? 1 : -1;
-    });
 
-    for (let i = 0; i < domains.length; i++) {
-      const d: string = domains[i];
-      const groupID: number = await ct.groupTabs(domainMap[d]);
-      const collapsed: boolean = !domainMap[d].includes(<number>activeTab.id);
-      const colorIdx = (domains.length - i - 1) % ctg.groupColors.length;
-      ctg.updateTabGroup(groupID, {
-        collapsed: collapsed,
-        title: d,
-        color: ctg.groupColors[colorIdx],
-      });
-      ctg.moveGroup(groupID, pinnedTabs.length);
-    }
+    runGroupTabs(domains, domainMap, pinnedTabs, activeTab);
   });
 
+  /**
+   * action for "Ungroup"
+   */
   ungroupTabs.addEventListener("click", async () => {
     const tabs = await ct.queryTabs({
       currentWindow: true,
@@ -116,6 +100,9 @@ function groupTabs() {
     ct.ungroupTabs(tabIDs);
   });
 
+  /**
+   * action for "Remove duplicated tabs
+   */
   removeDupTabs.addEventListener("click", async () => {
     removeDuplicatedTabs();
   });
@@ -136,6 +123,36 @@ function groupTabs() {
     const tabs = await ct.queryTabs(targetTabConditions);
     const sorted = ct.sortTabsByDomainNameIgnoreSubDomain(tabs);
     ct.moveTabs(sorted);
+  };
+
+  const runGroupTabs = async (
+    domains: string[],
+    domainMap: { [key: string]: number[] },
+    pinnedTabs: chrome.tabs.Tab[],
+    activeTab: chrome.tabs.Tab
+  ) => {
+    domains.sort((a, b) => {
+      return a < b ? 1 : -1;
+    });
+
+    for (let i = 0; i < domains.length; i++) {
+      const d: string = domains[i];
+
+      // not group for domain has one tab
+      if (domainMap[d].length == 1) {
+        continue;
+      }
+
+      const groupID: number = await ct.groupTabs(domainMap[d]);
+      const collapsed: boolean = !domainMap[d].includes(<number>activeTab.id);
+      const colorIdx = (domains.length - i - 1) % ctg.groupColors.length;
+      ctg.updateTabGroup(groupID, {
+        collapsed: collapsed,
+        title: d,
+        color: ctg.groupColors[colorIdx],
+      });
+      ctg.moveGroup(groupID, pinnedTabs.length);
+    }
   };
 
   const removeDuplicatedTabs = async () => {
