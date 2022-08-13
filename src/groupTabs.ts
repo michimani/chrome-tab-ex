@@ -17,10 +17,16 @@ function groupTabs() {
     groupId: chrome.tabGroups.TAB_GROUP_ID_NONE,
   };
 
+  /**
+   * action for "Sort Tabs (not to group)"
+   */
   sortTabs.addEventListener("click", async () => {
     sortTabsByURL();
   });
 
+  /**
+   * action for "Group Tabs by Domain"
+   */
   groupTabs.addEventListener("click", async () => {
     sortTabsByDomainName();
     const tabs = await ct.queryTabs(targetTabConditions);
@@ -60,6 +66,9 @@ function groupTabs() {
     }
   });
 
+  /**
+   * action for "Group Tabs by Domain (ignore sub-domain)"
+   */
   groupTabsIgnoreSubDomain.addEventListener("click", async () => {
     sortTabsByDomainNameIgnoreSubDomain();
     const tabs = await ct.queryTabs(targetTabConditions);
@@ -99,6 +108,9 @@ function groupTabs() {
     }
   });
 
+  /**
+   * action for "Ungroup"
+   */
   ungroupTabs.addEventListener("click", async () => {
     const tabs = await ct.queryTabs({
       currentWindow: true,
@@ -116,6 +128,9 @@ function groupTabs() {
     ct.ungroupTabs(tabIDs);
   });
 
+  /**
+   * action for "Remove duplicated tabs
+   */
   removeDupTabs.addEventListener("click", async () => {
     removeDuplicatedTabs();
   });
