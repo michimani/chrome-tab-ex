@@ -2,6 +2,11 @@
 CHANGELOG
 =========
 
+1.4.0
+======
+
+* Feature: Not group for domain or sub-domain that has only 1 tab.
+
 1.3.1
 ======
 
