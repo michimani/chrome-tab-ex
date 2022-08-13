@@ -48,22 +48,8 @@ function groupTabs() {
 
       domainMap[domain].push(<number>tabs[i].id);
     }
-    domains.sort((a, b) => {
-      return a < b ? 1 : -1;
-    });
 
-    for (let i = 0; i < domains.length; i++) {
-      const d: string = domains[i];
-      const groupID: number = await ct.groupTabs(domainMap[d]);
-      const collapsed: boolean = !domainMap[d].includes(<number>activeTab.id);
-      const colorIdx = (domains.length - i - 1) % ctg.groupColors.length;
-      ctg.updateTabGroup(groupID, {
-        collapsed: collapsed,
-        title: d,
-        color: ctg.groupColors[colorIdx],
-      });
-      ctg.moveGroup(groupID, pinnedTabs.length);
-    }
+    runGroupTabs(domains, domainMap, pinnedTabs, activeTab);
   });
 
   /**
@@ -90,22 +76,8 @@ function groupTabs() {
 
       domainMap[domain].push(<number>tabs[i].id);
     }
-    domains.sort((a, b) => {
-      return a < b ? 1 : -1;
-    });
 
-    for (let i = 0; i < domains.length; i++) {
-      const d: string = domains[i];
-      const groupID: number = await ct.groupTabs(domainMap[d]);
-      const collapsed: boolean = !domainMap[d].includes(<number>activeTab.id);
-      const colorIdx = (domains.length - i - 1) % ctg.groupColors.length;
-      ctg.updateTabGroup(groupID, {
-        collapsed: collapsed,
-        title: d,
-        color: ctg.groupColors[colorIdx],
-      });
-      ctg.moveGroup(groupID, pinnedTabs.length);
-    }
+    runGroupTabs(domains, domainMap, pinnedTabs, activeTab);
   });
 
   /**
@@ -151,6 +123,30 @@ function groupTabs() {
     const tabs = await ct.queryTabs(targetTabConditions);
     const sorted = ct.sortTabsByDomainNameIgnoreSubDomain(tabs);
     ct.moveTabs(sorted);
+  };
+
+  const runGroupTabs = async (
+    domains: string[],
+    domainMap: { [key: string]: number[] },
+    pinnedTabs: chrome.tabs.Tab[],
+    activeTab: chrome.tabs.Tab
+  ) => {
+    domains.sort((a, b) => {
+      return a < b ? 1 : -1;
+    });
+
+    for (let i = 0; i < domains.length; i++) {
+      const d: string = domains[i];
+      const groupID: number = await ct.groupTabs(domainMap[d]);
+      const collapsed: boolean = !domainMap[d].includes(<number>activeTab.id);
+      const colorIdx = (domains.length - i - 1) % ctg.groupColors.length;
+      ctg.updateTabGroup(groupID, {
+        collapsed: collapsed,
+        title: d,
+        color: ctg.groupColors[colorIdx],
+      });
+      ctg.moveGroup(groupID, pinnedTabs.length);
+    }
   };
 
   const removeDuplicatedTabs = async () => {
