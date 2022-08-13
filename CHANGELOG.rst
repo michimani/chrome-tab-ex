@@ -2,6 +2,11 @@
 CHANGELOG
 =========
 
+1.4.1
+======
+
+* Fix: Fix sequence of grouped tab color.
+
 1.4.0
 ======
 
